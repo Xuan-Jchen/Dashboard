@@ -1,2 +1,113 @@
 /* For information on how to create your own theme, please refer to:
 http://ionicframework.com/docs/theming/ */
+
+/* Minimal theme variables to avoid unreadable UI when defaults are missing. */
+:root {
+  --ion-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* Layout / surfaces (dashboard) */
+  --gd-page-max: 1280px;
+  --gd-surface-0: #0a0f1e;
+  --gd-surface-1: #0f1419;
+  --gd-surface-2: #121a28;
+  --gd-surface-card: #141d2e;
+  --gd-border: rgba(255, 255, 255, 0.08);
+  --gd-border-strong: rgba(255, 255, 255, 0.12);
+  --gd-radius-sm: 8px;
+  --gd-radius-md: 12px;
+  --gd-radius-lg: 16px;
+
+  /* App surfaces */
+  --ion-background-color: #0a0f1e;
+  --ion-background-color-rgb: 10, 15, 30;
+  --ion-text-color: #f9fafb;
+  --ion-text-color-rgb: 249, 250, 251;
+
+  --ion-toolbar-background: #0a0f1e;
+  --ion-item-background: #111827;
+
+  /* Primary */
+  /* Slightly calmer accent than pure neon */
+  --ion-color-primary: #2dd4bf;
+  --ion-color-primary-rgb: 45, 212, 191;
+  --ion-color-primary-contrast: #0a0f1e;
+  --ion-color-primary-contrast-rgb: 10, 15, 30;
+  --ion-color-primary-shade: #28bea8;
+  --ion-color-primary-tint: #42d8c5;
+
+  /* Status colors */
+  --ion-color-success: #10b981;
+  --ion-color-success-rgb: 16, 185, 129;
+  --ion-color-success-contrast: #0a0f1e;
+  --ion-color-success-contrast-rgb: 10, 15, 30;
+
+  --ion-color-warning: #f59e0b;
+  --ion-color-warning-rgb: 245, 158, 11;
+  --ion-color-warning-contrast: #0a0f1e;
+  --ion-color-warning-contrast-rgb: 10, 15, 30;
+
+  --ion-color-danger: #ef4444;
+  --ion-color-danger-rgb: 239, 68, 68;
+  --ion-color-danger-contrast: #0a0f1e;
+  --ion-color-danger-contrast-rgb: 10, 15, 30;
+
+  --ion-color-medium: #9ca3af;
+  --ion-color-medium-rgb: 156, 163, 175;
+  --ion-color-medium-contrast: #0a0f1e;
+  --ion-color-medium-contrast-rgb: 10, 15, 30;
+}
+
+/* Ensure Ionic components inherit readable colors even if a palette overrides vars. */
+body,
+ion-app {
+  background: var(--ion-background-color);
+  color: var(--ion-text-color);
+}
+
+ion-content {
+  --color: var(--ion-text-color);
+}
+
+ion-title,
+ion-label,
+ion-item,
+ion-list,
+ion-list-header,
+ion-badge,
+ion-button,
+ion-icon {
+  --color: var(--ion-text-color);
+}
+
+/* Fallback: if Stencil hydration is delayed/missing, don't render a blank app. */
+ion-app:not(.hydrated),
+ion-content:not(.hydrated),
+ion-page:not(.hydrated),
+ion-header:not(.hydrated),
+ion-toolbar:not(.hydrated),
+ion-router-outlet:not(.hydrated),
+ion-menu:not(.hydrated),
+ion-split-pane:not(.hydrated) {
+  visibility: visible !important;
+}
+
+/* Layout fallback: prevent height collapse (black screen with only app background). */
+html,
+body,
+#app,
+ion-app,
+ion-split-pane,
+ion-router-outlet,
+ion-page {
+  height: 100%;
+}
+
+/* Prefer Ionic-managed scrolling inside ion-content (avoid "scroll to see content"). */
+html, body {
+  overflow: hidden;
+}
+
+#app,
+ion-app {
+  min-height: 100vh;
+}

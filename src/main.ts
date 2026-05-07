@@ -29,7 +29,8 @@ import '@ionic/vue/css/display.css';
 
 /* @import '@ionic/vue/css/palettes/dark.always.css'; */
 /* @import '@ionic/vue/css/palettes/dark.class.css'; */
-import '@ionic/vue/css/palettes/dark.system.css';
+// NOTE: Disabled to avoid palette/variable conflicts causing invisible UI.
+// import '@ionic/vue/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';

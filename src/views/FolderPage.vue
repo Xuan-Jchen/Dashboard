@@ -18,7 +18,7 @@
 
       <div id="container">
         <strong class="capitalize">{{ $route.params.id }}</strong>
-        <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+        <p>Explora <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">componentes de interfaz</a></p>
       </div>
     </ion-content>
   </ion-page>
