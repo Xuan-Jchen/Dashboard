@@ -52,7 +52,6 @@
         <div class="chart-header">
           <div>
             <h3 class="chart-title">Usuarios Activos Mensuales</h3>
-            <p class="chart-subtitle">KPI B1 — Línea ámbar = objetivo MAU | Biblioteca: ApexCharts</p>
           </div>
           <div class="chart-badge apexcharts-badge">ApexCharts</div>
         </div>
@@ -79,14 +78,8 @@
           <div class="chart-header">
             <div>
               <h3 class="chart-title">Ingresos por Género</h3>
-              <p class="chart-subtitle">KPI B3 — Objetivo ARPU €{{ arpuTarget }} | Biblioteca: ECharts</p>
             </div>
             <div class="chart-badge echarts-badge">ECharts</div>
-          </div>
-          <div class="no-line-note">
-            <span class="no-line-note__tag">Nota</span>
-            El gráfico de dona no admite líneas de umbral —
-            <router-link to="/kpi-panel">Ajustar en el panel KPI</router-link>
           </div>
           <v-chart v-if="chartsReady" class="echart-container" :option="revenueDonutOption" autoresize />
           <div v-else class="chart-loading">Cargando gráfico…</div>
@@ -97,7 +90,6 @@
           <div class="chart-header">
             <div>
               <h3 class="chart-title">Juegos Principales por Jugadores</h3>
-              <p class="chart-subtitle">KPI B4 — Línea ámbar discontinua = objetivo de jugadores | Biblioteca: Chart.js</p>
             </div>
             <div class="chart-badge chartjs-badge">Chart.js</div>
           </div>
@@ -127,14 +119,8 @@
           <div class="chart-header">
             <div>
               <h3 class="chart-title">Engagement de la comunidad</h3>
-              <p class="chart-subtitle">KPI B5 — Objetivo NPS: {{ npsTarget }} pts | Biblioteca: ApexCharts</p>
             </div>
             <div class="chart-badge apexcharts-badge">ApexCharts</div>
-          </div>
-          <div class="no-line-note">
-            <span class="no-line-note__tag">Nota</span>
-            El gráfico polar no admite una sola línea de umbral —
-            <router-link to="/kpi-panel">Ajustar en el panel KPI</router-link>
           </div>
           <apexchart type="polarArea" height="260" :options="engagementOptions" :series="engagementSeries" />
         </div>
@@ -144,7 +130,6 @@
           <div class="chart-header">
             <div>
               <h3 class="chart-title">Embudo de Adquisición</h3>
-              <p class="chart-subtitle">KPI B2 — Línea discontinua = paso de retención objetivo | Biblioteca: Personalizado</p>
             </div>
             <div class="chart-badge custom-badge">Personalizado</div>
           </div>

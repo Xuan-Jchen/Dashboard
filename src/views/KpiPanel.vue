@@ -195,24 +195,32 @@
         </div>
 
         <div class="smart-cards">
-          <section v-for="card in smartCards" :key="card.id" class="smart-card" :aria-label="card.title">
-            <div class="smart-head">
-              <div class="smart-check" aria-hidden="true">✓</div>
-              <div class="smart-title-wrap">
-                <div class="smart-title">{{ card.title }}</div>
-                <div class="smart-goal">“{{ card.goal }}”.</div>
-              </div>
-            </div>
-            <div class="smart-grid">
-              <div v-for="item in card.items" :key="item.letter" class="smart-item">
-                <div class="smart-letter">{{ item.letter }}</div>
-                <div class="smart-text">
-                  <div class="smart-k">{{ item.k }}</div>
-                  <div class="smart-v">{{ item.v }}</div>
+          <details v-for="card in smartKpiCards" :key="card.id" class="smart-kpi">
+            <summary class="smart-summary">
+              <span class="smart-summary__title">{{ card.title }}</span>
+              <span class="smart-summary__meta">{{ card.meta }}</span>
+              <span class="smart-summary__chev" aria-hidden="true">▾</span>
+            </summary>
+
+            <section class="smart-card" :aria-label="card.title">
+              <div class="smart-head">
+                <div class="smart-check" aria-hidden="true">✓</div>
+                <div class="smart-title-wrap">
+                  <div class="smart-title">{{ card.title }}</div>
+                  <div class="smart-goal">“{{ card.goal }}”.</div>
                 </div>
               </div>
-            </div>
-          </section>
+              <div class="smart-grid">
+                <div v-for="item in card.items" :key="item.letter" class="smart-item">
+                  <div class="smart-letter">{{ item.letter }}</div>
+                  <div class="smart-text">
+                    <div class="smart-k">{{ item.k }}</div>
+                    <div class="smart-v">{{ item.v }}</div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </details>
         </div>
       </section>
 
@@ -728,6 +736,7 @@ function fmt(v: number, unit = '', unitPrefix = ''): string {
 
 type SmartItem = { letter: 'S' | 'M' | 'A' | 'R' | 'T'; k: string; v: string }
 type SmartCard = { id: string; title: string; goal: string; items: SmartItem[] }
+type SmartKpiCard = SmartCard & { meta: string }
 
 function measurableFrom(ids: string[]): string[] {
   return ids
@@ -740,66 +749,30 @@ function measurableFrom(ids: string[]): string[] {
     })
 }
 
-const smartCards = computed<SmartCard[]>(() => {
-  // Business
-  const bizIds = ['b1_mau', 'b2_retention', 'b3_arpu', 'b4_top_game', 'b5_nps']
-  const bizM = measurableFrom(bizIds)
-  const bizGoal = bizM.length
-    ? `En los próximos 12 meses, impulsar crecimiento y monetización cumpliendo: ${bizM.join(', ')}`
-    : 'En los próximos 12 meses, impulsar los KPIs clave del negocio.'
-
-  // Reliability / SLO-ish
-  const relIds = ['t1_latency', 't2_uptime', 't3_error']
-  const relM = measurableFrom(relIds)
-  const relGoal = relM.length
-    ? `En los próximos 12 meses, mantener la calidad del servicio cumpliendo: ${relM.join(', ')}`
-    : 'En los próximos 12 meses, mantener la calidad del servicio.'
-
-  // Infra efficiency
-  const infraIds = ['t4_db', 't5_memory']
-  const infraM = measurableFrom(infraIds)
-  const infraGoal = infraM.length
-    ? `En los próximos 12 meses, optimizar infraestructura y rendimiento cumpliendo: ${infraM.join(', ')}`
-    : 'En los próximos 12 meses, optimizar infraestructura y rendimiento.'
-
-  return [
-    {
-      id: 'smart_business',
-      title: 'SMART • Crecimiento (Negocio)',
-      goal: bizGoal,
-      items: [
-        { letter: 'S', k: 'Específico', v: 'Mejorar adquisición, retención, engagement y monetización (KPIs comerciales).' },
-        { letter: 'M', k: 'Medible', v: bizM.length ? bizM.join(' · ') : 'Objetivos cuantificados por KPI comercial.' },
-        { letter: 'A', k: 'Alcanzable', v: 'Los objetivos se ajustan con sliders y se validan con referencias visuales en gráficos.' },
-        { letter: 'R', k: 'Relevante', v: 'Impacta directamente en uso del producto y generación de ingresos.' },
-        { letter: 'T', k: 'Temporal', v: 'Horizonte: 12 meses (seguimiento continuo en el tablero comercial).' },
-      ],
-    },
-    {
-      id: 'smart_reliability',
-      title: 'SMART • Estabilidad (SLO)',
-      goal: relGoal,
-      items: [
-        { letter: 'S', k: 'Específico', v: 'Reducir latencia, errores y asegurar alta disponibilidad (KPIs técnicos).' },
-        { letter: 'M', k: 'Medible', v: relM.length ? relM.join(' · ') : 'Objetivos cuantificados por KPI de estabilidad.' },
-        { letter: 'A', k: 'Alcanzable', v: 'Con alertas/umbrales en tiempo real y ajustes centralizados del objetivo.' },
-        { letter: 'R', k: 'Relevante', v: 'Protege la experiencia del usuario y reduce incidentes operativos.' },
-        { letter: 'T', k: 'Temporal', v: 'Horizonte: 12 meses (monitoreo permanente en el tablero técnico).' },
-      ],
-    },
-    {
-      id: 'smart_infra',
-      title: 'SMART • Eficiencia (Infra/DB)',
-      goal: infraGoal,
-      items: [
-        { letter: 'S', k: 'Específico', v: 'Optimizar el rendimiento de DB y el consumo de recursos (memoria).' },
-        { letter: 'M', k: 'Medible', v: infraM.length ? infraM.join(' · ') : 'Objetivos cuantificados por KPI de rendimiento.' },
-        { letter: 'A', k: 'Alcanzable', v: 'Priorización por visualizaciones (treemap/correlaciones) y ajuste de objetivos por KPI.' },
-        { letter: 'R', k: 'Relevante', v: 'Reduce costos, mejora escalabilidad y evita degradaciones por saturación.' },
-        { letter: 'T', k: 'Temporal', v: 'Horizonte: 12 meses (revisión periódica con base en tendencias).' },
-      ],
-    },
-  ]
+const smartKpiCards = computed<SmartKpiCard[]>(() => {
+  return allKpis.value.map((kpi: any) => {
+    const op = kpi.higherIsBetter ? '≥' : '≤'
+    const metric = `${kpi.shortLabel || kpi.label} ${op} ${fmt(kpi.target, kpi.unit, kpi.unitPrefix)}`
+    const current = `${fmt(kpi.currentValue, kpi.unit, kpi.unitPrefix)}`
+    const meta = `Actual: ${current} · Objetivo: ${fmt(kpi.target, kpi.unit, kpi.unitPrefix)}`
+    const goal = `En los próximos 12 meses, asegurar ${metric} (con seguimiento continuo y ajuste de objetivo desde el panel KPI)`
+    const items: SmartItem[] = [
+      { letter: 'S', k: 'Específico', v: `Cumplir el objetivo del KPI «${kpi.label}» en el dashboard ${kpi.dashboard === 'business' ? 'Comercial' : 'Técnico'}.` },
+      { letter: 'M', k: 'Medible', v: `Métrica: ${kpi.label}. Condición: ${metric}. Valor actual: ${current}.` },
+      { letter: 'A', k: 'Alcanzable', v: `El objetivo es configurable (min/max/step) y se valida con referencias/umbrales donde el gráfico lo soporta.` },
+      { letter: 'R', k: 'Relevante', v: kpi.dashboard === 'business'
+        ? 'Alinea el rendimiento del producto con crecimiento, retención y monetización.'
+        : 'Asegura estabilidad operativa: rendimiento, disponibilidad y salud del sistema.' },
+      { letter: 'T', k: 'Temporal', v: 'Horizonte: 12 meses (revisión periódica y seguimiento continuo en dashboards).' },
+    ]
+    return {
+      id: `smart_${kpi.id}`,
+      title: kpi.label,
+      meta,
+      goal,
+      items,
+    }
+  })
 })
 
 function createKpi() {
@@ -981,10 +954,50 @@ async function confirmResetAll() {
   text-align: right;
 }
 .smart-cards{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  display:flex;
+  flex-direction: column;
+  gap: 10px;
 }
+.smart-kpi{
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--gd-radius-lg, 16px);
+  background: rgba(15, 23, 42, .35);
+  overflow: hidden;
+}
+.smart-kpi[open]{ background: rgba(15, 23, 42, .55); }
+.smart-summary{
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  padding: 12px 14px;
+  color: var(--ion-text-color);
+}
+.smart-summary::-webkit-details-marker{ display:none; }
+.smart-summary__title{
+  font-size: 13px;
+  font-weight: 750;
+  min-width: 0;
+  overflow:hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.smart-summary__meta{
+  margin-left: auto;
+  font-size: 11px;
+  color: #9ca3af;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.smart-summary__chev{
+  font-size: 14px;
+  color: #9ca3af;
+  margin-left: 6px;
+  transition: transform .2s ease;
+}
+.smart-kpi[open] .smart-summary__chev{ transform: rotate(180deg); }
 .smart-card{
   padding: 16px;
   border-radius: var(--gd-radius-lg, 16px);
@@ -1437,8 +1450,9 @@ async function confirmResetAll() {
   .summary-banner { flex-wrap: wrap; }
   .kpi-cards-grid { grid-template-columns: 1fr; }
   .smart-grid { grid-template-columns: 1fr; }
-  .smart-cards { grid-template-columns: 1fr; }
   .smart-wrap__head{ flex-direction: column; align-items: flex-start; }
   .smart-wrap__hint{ text-align: left; }
+  .smart-summary{ flex-wrap: wrap; }
+  .smart-summary__meta{ margin-left: 0; width: 100%; }
 }
 </style>

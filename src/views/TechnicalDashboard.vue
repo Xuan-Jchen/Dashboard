@@ -53,7 +53,6 @@
               Solicitudes API / segundo
               <span class="live-pill" aria-hidden="true">Live</span>
             </h3>
-            <p class="chart-subtitle">KPI T1 — Línea ámbar discontinua = umbral de latencia | Biblioteca: Chart.js (tiempo real)</p>
           </div>
           <div class="chart-badge realtime-badge">TIEMPO REAL • Chart.js</div>
         </div>
@@ -91,14 +90,8 @@
           <div class="chart-header">
             <div>
               <h3 class="chart-title">Mapa de calor de errores</h3>
-              <p class="chart-subtitle">KPI T3 — Objetivo de tasa de error: {{ errorTarget }}% | Biblioteca: ECharts</p>
             </div>
             <div class="chart-badge echarts-badge">ECharts</div>
-          </div>
-          <div class="no-line-note">
-            <span class="no-line-note__tag">Nota</span>
-            El mapa de calor muestra la distribución — sin una sola línea de umbral.
-            <router-link to="/kpi-panel">Ajustar en el panel KPI</router-link>
           </div>
           <v-chart v-if="chartsReady" class="echart-container" :option="heatmapOption" autoresize />
           <div v-else class="chart-loading">Cargando gráfico…</div>
@@ -109,7 +102,6 @@
           <div class="chart-header">
             <div>
               <h3 class="chart-title">Indicadores de salud del sistema</h3>
-              <p class="chart-subtitle">KPI T2 — Marcador cian = objetivo de disponibilidad | Biblioteca: SVG personalizado</p>
             </div>
             <div class="chart-badge custom-badge">SVG Personalizado</div>
           </div>
@@ -176,7 +168,6 @@
           <div class="chart-header">
             <div>
               <h3 class="chart-title">Memoria vs CPU por Servicio</h3>
-              <p class="chart-subtitle">KPI T5 — Líneas discontinuas = umbrales de memoria y CPU | Biblioteca: Chart.js</p>
             </div>
             <div class="chart-badge chartjs-badge">Chart.js</div>
           </div>
@@ -204,14 +195,8 @@
           <div class="chart-header">
             <div>
               <h3 class="chart-title">Tiempo de consulta DB por colección</h3>
-              <p class="chart-subtitle">KPI T4 — Objetivo de consulta: {{ dbTarget }}ms promedio | Biblioteca: ECharts</p>
             </div>
             <div class="chart-badge echarts-badge">ECharts</div>
-          </div>
-          <div class="no-line-note">
-            <span class="no-line-note__tag">Nota</span>
-            El treemap muestra el costo relativo de consultas — sin línea de umbral.
-            <router-link to="/kpi-panel">Ajustar en el panel KPI</router-link>
           </div>
           <v-chart v-if="chartsReady" class="echart-container" :option="treemapOption" autoresize />
           <div v-else class="chart-loading">Cargando gráfico…</div>
